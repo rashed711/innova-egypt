@@ -250,7 +250,7 @@ const App: React.FC = () => {
     window.addEventListener('scroll', handleScroll);
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % HERO_IMAGES.length);
-    }, 7000);
+    }, 8000); // 8 seconds for a more relaxed feel
     return () => {
       window.removeEventListener('scroll', handleScroll);
       clearInterval(interval);
@@ -290,13 +290,6 @@ const App: React.FC = () => {
           </motion.div>
 
           <div className={`hidden lg:flex items-center gap-8 ${scrolled ? 'text-slate-700' : 'text-white'}`}>
-            <button 
-              onClick={toggleLang}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-blue-500/10 transition-all font-black text-xs uppercase"
-            >
-              <Globe size={16} />
-              {lang === 'en' ? 'العربية' : 'English'}
-            </button>
             {[
               { n: t.nav.home, id: 'home' }, 
               { n: t.nav.about, id: 'about' }, 
@@ -312,6 +305,15 @@ const App: React.FC = () => {
                 <span className="absolute -bottom-1 right-0 w-0 h-0.5 bg-blue-500 transition-all duration-500 group-hover:w-full" />
               </button>
             ))}
+
+            <button 
+              onClick={toggleLang}
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all font-black text-xs uppercase border ${scrolled ? 'border-slate-200 hover:bg-slate-50 text-slate-700' : 'border-white/20 hover:bg-white/10 text-white'}`}
+            >
+              <Globe size={16} />
+              {lang === 'en' ? 'العربية' : 'English'}
+            </button>
+
             <Button variant={scrolled ? 'primary' : 'outline'} onClick={() => window.open(WHATSAPP_LINK)}>
               {t.nav.startProject}
             </Button>
@@ -331,95 +333,104 @@ const App: React.FC = () => {
         </div>
       </nav>
 
-      {/* Hero Section */}
+      {/* Hero Section - Optimized Transitions */}
       <section id="home" className="relative min-h-screen flex items-center bg-slate-950 overflow-hidden">
-        <AnimatePresence mode="wait">
-          <motion.div 
-            key={currentSlide}
-            initial={{ opacity: 0, scale: 1.15 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 2, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-0 z-0"
-          >
-            <div className="absolute inset-0 bg-slate-950/40 z-10" />
-            <img 
-              src={HERO_IMAGES[currentSlide]} 
-              className="w-full h-full object-cover" 
-              alt="Slide" 
-            />
-            <div className={`absolute inset-0 bg-gradient-to-${lang === 'ar' ? 'l' : 'r'} from-slate-950 via-slate-950/60 to-transparent z-10`} />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-90 z-10" />
-          </motion.div>
-        </AnimatePresence>
+        {/* Layered Background System */}
+        <div className="absolute inset-0 z-0">
+          <AnimatePresence mode="wait">
+            <motion.div 
+              key={currentSlide}
+              initial={{ opacity: 0, scale: 1.1, filter: 'blur(20px)' }}
+              animate={{ opacity: 1, scale: 1.25, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, scale: 1.15, filter: 'blur(10px)' }}
+              transition={{ 
+                opacity: { duration: 1.5, ease: "easeInOut" },
+                scale: { duration: 10, ease: "linear" }, // Continuous slow Ken Burns
+                filter: { duration: 1.2 }
+              }}
+              className="absolute inset-0"
+            >
+              <div className="absolute inset-0 bg-slate-950/40 z-10" />
+              <img 
+                src={HERO_IMAGES[currentSlide]} 
+                className="w-full h-full object-cover" 
+                alt="Slide" 
+              />
+              <div className={`absolute inset-0 bg-gradient-to-${lang === 'ar' ? 'l' : 'r'} from-slate-950 via-slate-950/60 to-transparent z-10`} />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-90 z-10" />
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
         <div className="container mx-auto px-6 lg:px-12 relative z-20">
           <div className={`max-w-4xl text-${lang === 'ar' ? 'right' : 'left'}`}>
-            <motion.div 
-              key={`badge-${currentSlide}-${lang}`}
-              initial={{ opacity: 0, x: lang === 'ar' ? 30 : -30 }} animate={{ opacity: 1, x: 0 }}
-              className="inline-flex items-center gap-3 px-4 py-2 bg-blue-600/20 border border-blue-500/30 text-blue-200 rounded-xl text-xs font-black uppercase tracking-[0.2em] mb-8 backdrop-blur-md"
-            >
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-              </span>
-              {t.hero[currentSlide].badge}
-            </motion.div>
-            
-            <motion.h1 
-              key={`title-${currentSlide}-${lang}`}
-              initial={{ opacity: 0, y: 50, filter: 'blur(10px)' }}
-              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              className="h-xl font-black text-white mb-8 leading-[1.05]"
-            >
-              {t.hero[currentSlide].title}
-            </motion.h1>
+            <AnimatePresence mode="wait">
+              <motion.div 
+                key={`content-${currentSlide}-${lang}`}
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
+                variants={anim.stagger}
+                className="space-y-8"
+              >
+                <motion.div 
+                  variants={anim.reveal()}
+                  className="inline-flex items-center gap-3 px-4 py-2 bg-blue-600/20 border border-blue-500/30 text-blue-200 rounded-xl text-xs font-black uppercase tracking-[0.2em] backdrop-blur-md"
+                >
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                  </span>
+                  {t.hero[currentSlide].badge}
+                </motion.div>
+                
+                <motion.h1 
+                  variants={anim.reveal(0.1)}
+                  className="h-xl font-black text-white leading-[1.05]"
+                >
+                  {t.hero[currentSlide].title}
+                </motion.h1>
 
-            <motion.p 
-              key={`sub-${currentSlide}-${lang}`}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-              className={`p-lg text-slate-200 mb-12 max-w-2xl font-bold opacity-80 leading-relaxed border-${lang === 'ar' ? 'r' : 'l'}-4 border-blue-600 p${lang === 'ar' ? 'r' : 'l'}-6`}
-            >
-              {t.hero[currentSlide].sub}
-            </motion.p>
+                <motion.p 
+                  variants={anim.reveal(0.2)}
+                  className={`p-lg text-slate-200 max-w-2xl font-bold opacity-80 leading-relaxed border-${lang === 'ar' ? 'r' : 'l'}-4 border-blue-600 p${lang === 'ar' ? 'r' : 'l'}-6`}
+                >
+                  {t.hero[currentSlide].sub}
+                </motion.p>
 
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="flex flex-wrap gap-5"
-            >
-              <Button onClick={() => window.open(WHATSAPP_LINK)} className="group relative overflow-hidden">
-                {t.heroButtons.start}
-                {lang === 'ar' ? <ArrowLeft className="group-hover:-translate-x-2 transition-transform" /> : <ArrowRight className="group-hover:translate-x-2 transition-transform" />}
-              </Button>
-              <Button variant="outline" onClick={() => scrollTo('services')}>{t.heroButtons.explore}</Button>
-            </motion.div>
+                <motion.div 
+                  variants={anim.reveal(0.3)}
+                  className="flex flex-wrap gap-5 pt-4"
+                >
+                  <Button onClick={() => window.open(WHATSAPP_LINK)} className="group relative overflow-hidden">
+                    {t.heroButtons.start}
+                    {lang === 'ar' ? <ArrowLeft className="group-hover:-translate-x-2 transition-transform" /> : <ArrowRight className="group-hover:translate-x-2 transition-transform" />}
+                  </Button>
+                  <Button variant="outline" onClick={() => scrollTo('services')}>{t.heroButtons.explore}</Button>
+                </motion.div>
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
 
-        {/* Indicators */}
-        <div className={`absolute bottom-12 ${lang === 'ar' ? 'right' : 'left'}-12 flex items-end gap-3 z-30`}>
+        {/* Improved Indicators */}
+        <div className={`absolute bottom-12 ${lang === 'ar' ? 'right' : 'left'}-12 flex items-end gap-4 z-30`}>
           {HERO_IMAGES.map((_, i) => (
             <button 
               key={i} 
               onClick={() => setCurrentSlide(i)}
-              className="group relative h-12 w-1.5 overflow-hidden rounded-full bg-white/20 transition-all"
+              className="group relative h-16 w-1 overflow-hidden rounded-full bg-white/10 transition-all hover:bg-white/20"
             >
               <motion.div 
                 className="absolute bottom-0 left-0 right-0 bg-blue-500"
                 initial={{ height: 0 }}
                 animate={{ height: currentSlide === i ? "100%" : "0%" }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.8, ease: "circOut" }}
               />
             </button>
           ))}
-          <div className={`m${lang === 'ar' ? 'r' : 'l'}-4 text-white/40 font-black text-xs vertical-text tracking-widest uppercase`}>
-            Scroll
+          <div className={`m${lang === 'ar' ? 'r' : 'l'}-4 text-white/30 font-black text-[10px] vertical-text tracking-[0.3em] uppercase`}>
+            Explore Innova
           </div>
         </div>
       </section>
