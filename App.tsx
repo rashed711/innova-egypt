@@ -114,7 +114,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col font-sans selection:bg-blue-600 selection:text-white overflow-x-hidden">
+    <div className="min-h-screen flex flex-col font-sans selection:bg-blue-600 selection:text-white overflow-x-hidden text-right" dir="rtl">
       
       {/* Navigation Header */}
       <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? 'bg-white shadow-xl py-2' : 'bg-transparent py-5'}`}>
@@ -168,10 +168,9 @@ const App: React.FC = () => {
         {slides.map((slide, index) => (
           <div 
             key={index}
-            className={`absolute inset-0 transition-all duration-1000 ease-in-out ${index === currentSlide ? 'opacity-70 scale-100' : 'opacity-0 scale-105'}`}
+            className={`absolute inset-0 transition-all duration-1000 ease-in-out ${index === currentSlide ? 'opacity-80 scale-100' : 'opacity-0 scale-105'}`}
           >
             <img src={slide.url} alt={slide.title} className="w-full h-full object-cover" />
-            {/* Multi-layered gradient for both clarity and readability */}
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
             <div className="absolute inset-0 bg-gradient-to-l from-slate-950/40 via-transparent to-transparent hidden lg:block"></div>
           </div>
