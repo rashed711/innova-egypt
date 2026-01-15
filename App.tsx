@@ -250,7 +250,7 @@ const App: React.FC = () => {
     window.addEventListener('scroll', handleScroll);
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % HERO_IMAGES.length);
-    }, 8000); // 8 seconds for a more relaxed feel
+    }, 9000); 
     return () => {
       window.removeEventListener('scroll', handleScroll);
       clearInterval(interval);
@@ -333,31 +333,39 @@ const App: React.FC = () => {
         </div>
       </nav>
 
-      {/* Hero Section - Optimized Transitions */}
+      {/* Hero Section - Refined Transitions */}
       <section id="home" className="relative min-h-screen flex items-center bg-slate-950 overflow-hidden">
-        {/* Layered Background System */}
+        {/* Superior Cross-fade & Ken Burns System */}
         <div className="absolute inset-0 z-0">
-          <AnimatePresence mode="wait">
+          <AnimatePresence initial={false}>
             <motion.div 
               key={currentSlide}
-              initial={{ opacity: 0, scale: 1.1, filter: 'blur(20px)' }}
-              animate={{ opacity: 1, scale: 1.25, filter: 'blur(0px)' }}
-              exit={{ opacity: 0, scale: 1.15, filter: 'blur(10px)' }}
+              initial={{ opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1.18 }}
+              exit={{ opacity: 0, scale: 1.1 }}
               transition={{ 
-                opacity: { duration: 1.5, ease: "easeInOut" },
-                scale: { duration: 10, ease: "linear" }, // Continuous slow Ken Burns
-                filter: { duration: 1.2 }
+                opacity: { duration: 2.2, ease: "easeInOut" },
+                scale: { duration: 15, ease: "linear" } // Seamless continuous motion
               }}
-              className="absolute inset-0"
+              className="absolute inset-0 overflow-hidden"
             >
-              <div className="absolute inset-0 bg-slate-950/40 z-10" />
+              {/* Dynamic Overlay Color Shift */}
+              <motion.div 
+                className="absolute inset-0 z-[5]"
+                initial={{ opacity: 0.2 }}
+                animate={{ opacity: 0 }}
+                transition={{ duration: 3 }}
+              />
               <img 
                 src={HERO_IMAGES[currentSlide]} 
                 className="w-full h-full object-cover" 
-                alt="Slide" 
+                alt="Innovative Tech" 
               />
-              <div className={`absolute inset-0 bg-gradient-to-${lang === 'ar' ? 'l' : 'r'} from-slate-950 via-slate-950/60 to-transparent z-10`} />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-90 z-10" />
+              
+              {/* Strategic Depth Overlays */}
+              <div className="absolute inset-0 bg-slate-950/40 z-10" />
+              <div className={`absolute inset-0 bg-gradient-to-${lang === 'ar' ? 'l' : 'r'} from-slate-950/90 via-slate-950/30 to-transparent z-10`} />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80 z-10" />
             </motion.div>
           </AnimatePresence>
         </div>
@@ -370,11 +378,17 @@ const App: React.FC = () => {
                 initial="hidden"
                 animate="visible"
                 exit="hidden"
-                variants={anim.stagger}
+                variants={{
+                  hidden: { opacity: 0, filter: 'blur(5px)' },
+                  visible: { opacity: 1, filter: 'blur(0px)', transition: { staggerChildren: 0.18, delayChildren: 0.4 } }
+                }}
                 className="space-y-8"
               >
                 <motion.div 
-                  variants={anim.reveal()}
+                  variants={{
+                    hidden: { opacity: 0, x: lang === 'ar' ? 30 : -30 },
+                    visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: "easeOut" } }
+                  }}
                   className="inline-flex items-center gap-3 px-4 py-2 bg-blue-600/20 border border-blue-500/30 text-blue-200 rounded-xl text-xs font-black uppercase tracking-[0.2em] backdrop-blur-md"
                 >
                   <span className="relative flex h-2 w-2">
@@ -385,21 +399,30 @@ const App: React.FC = () => {
                 </motion.div>
                 
                 <motion.h1 
-                  variants={anim.reveal(0.1)}
+                  variants={{
+                    hidden: { opacity: 0, y: 30 },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] } }
+                  }}
                   className="h-xl font-black text-white leading-[1.05]"
                 >
                   {t.hero[currentSlide].title}
                 </motion.h1>
 
                 <motion.p 
-                  variants={anim.reveal(0.2)}
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } }
+                  }}
                   className={`p-lg text-slate-200 max-w-2xl font-bold opacity-80 leading-relaxed border-${lang === 'ar' ? 'r' : 'l'}-4 border-blue-600 p${lang === 'ar' ? 'r' : 'l'}-6`}
                 >
                   {t.hero[currentSlide].sub}
                 </motion.p>
 
                 <motion.div 
-                  variants={anim.reveal(0.3)}
+                  variants={{
+                    hidden: { opacity: 0, y: 10 },
+                    visible: { opacity: 1, y: 0 }
+                  }}
                   className="flex flex-wrap gap-5 pt-4"
                 >
                   <Button onClick={() => window.open(WHATSAPP_LINK)} className="group relative overflow-hidden">
@@ -413,24 +436,31 @@ const App: React.FC = () => {
           </div>
         </div>
 
-        {/* Improved Indicators */}
-        <div className={`absolute bottom-12 ${lang === 'ar' ? 'right' : 'left'}-12 flex items-end gap-4 z-30`}>
+        {/* Improved Vertical Progress Indicators */}
+        <div className={`absolute bottom-12 ${lang === 'ar' ? 'right' : 'left'}-12 flex items-end gap-5 z-30`}>
           {HERO_IMAGES.map((_, i) => (
             <button 
               key={i} 
               onClick={() => setCurrentSlide(i)}
-              className="group relative h-16 w-1 overflow-hidden rounded-full bg-white/10 transition-all hover:bg-white/20"
+              className="group relative h-20 w-1 overflow-hidden rounded-full bg-white/10 transition-all hover:bg-white/20"
             >
               <motion.div 
-                className="absolute bottom-0 left-0 right-0 bg-blue-500"
+                className="absolute bottom-0 left-0 right-0 bg-blue-500 shadow-[0_0_12px_rgba(59,130,246,0.6)]"
                 initial={{ height: 0 }}
                 animate={{ height: currentSlide === i ? "100%" : "0%" }}
-                transition={{ duration: 0.8, ease: "circOut" }}
+                transition={{ duration: 1.2, ease: "circOut" }}
               />
             </button>
           ))}
-          <div className={`m${lang === 'ar' ? 'r' : 'l'}-4 text-white/30 font-black text-[10px] vertical-text tracking-[0.3em] uppercase`}>
-            Explore Innova
+          <div className={`m${lang === 'ar' ? 'r' : 'l'}-4 flex flex-col items-center gap-4`}>
+             <motion.div 
+              animate={{ height: [0, 48, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              className="w-px bg-gradient-to-b from-blue-500 to-transparent opacity-40"
+             />
+             <div className="text-white/20 font-black text-[8px] vertical-text tracking-[0.5em] uppercase">
+                Digital Excellence
+             </div>
           </div>
         </div>
       </section>
