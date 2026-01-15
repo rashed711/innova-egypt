@@ -12,22 +12,39 @@
             font-family: 'Inter', 'Noto Kufi Arabic', sans-serif;
             scroll-behavior: smooth;
         }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .text-gradient {
+            background: linear-gradient(to left, #60a5fa, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* تحسينات لضمان عدم ظهور محتوى مكسور أثناء التحميل */
+        #root:empty {
+            min-height: 100vh;
+            background: #020617;
+        }
     </style>
 <script type="importmap">
 {
   "imports": {
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3",
+    "react": "https://esm.sh/react@19.0.0",
+    "react/": "https://esm.sh/react@19.0.0/",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/": "https://esm.sh/react-dom@19.0.0/",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "lucide-react": "https://esm.sh/lucide-react@0.460.0?external=react,react-dom",
+    "framer-motion": "https://esm.sh/framer-motion@11.11.11?external=react,react-dom",
     "vite": "https://esm.sh/vite@^7.3.1"
   }
 }
 </script>
 </head>
-<body class="bg-slate-50 text-slate-900">
+<body class="bg-slate-50 text-slate-900 overflow-x-hidden">
     <div id="root"></div>
-    <!-- هذا السطر ضروري جداً ليعمل الموقع على Vercel -->
     <script type="module" src="/index.tsx"></script>
 </body>
 </html>

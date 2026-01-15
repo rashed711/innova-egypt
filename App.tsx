@@ -6,29 +6,37 @@ import {
   Layers, 
   Phone, 
   Mail, 
-  Rocket, 
-  Server, 
+  Monitor, 
+  Database, 
+  Globe, 
+  Settings, 
   ShieldCheck, 
   Zap, 
   Menu, 
-  X,
-  Monitor,
-  Database,
-  Globe,
-  Settings,
-  ChevronDown
+  X
 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 /**
- * Innova Technology - Final Corporate Version
- * - Enhanced Hero Image Clarity
- * - Full Link Activation
- * - Professional Logo & Header States
- * - Interactive Service Modals
- * - Enhanced RTL Typography
+ * Innova Technology - Brand Identity Edition
+ * Fixed Logo visibility and added Company Name in Navbar.
  */
 
 const LOGO_URL = "https://a.top4top.io/p_36677u24m1.png";
+
+const fadeInUp = {
+  initial: { opacity: 0, y: 30 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6, ease: "easeOut" }
+};
+
+const staggerContainer = {
+  animate: {
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
 
 const App: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -39,18 +47,18 @@ const App: React.FC = () => {
   const slides = [
     {
       url: "https://i.pinimg.com/1200x/33/98/a9/3398a94fd49532f5989e0e71c3b1e4a8.jpg",
-      title: "حلول تقنية متكاملة",
-      sub: "نحن نربط بين ذكاء البرمجيات وقوة العتاد"
+      title: "بنية تحتية ذكية",
+      sub: "نجمع بين أرقى الأجهزة وأذكى الحلول البرمجية"
     },
     {
       url: "https://i.pinimg.com/736x/10/bd/ce/10bdcee5acece5da5ea77a89d61ee653.jpg",
-      title: "بنية تحتية عالمية",
-      sub: "تجهيز مراكز البيانات والشبكات بأعلى المعايير"
+      title: "أمان واستمرارية",
+      sub: "تجهيز مراكز البيانات والشبكات بمعايير عالمية"
     },
     {
       url: "https://i.pinimg.com/736x/c5/3e/e0/c53ee081252602c320c5493822002708.jpg",
-      title: "تمكين التحول الرقمي",
-      sub: "شريكك الاستراتيجي للنمو في الاقتصاد الرقمي"
+      title: "مستقبل أعمالك يبدأ هنا",
+      sub: "شريكك الاستراتيجي للتحول الرقمي المتكامل"
     }
   ];
 
@@ -82,183 +90,225 @@ const App: React.FC = () => {
   ];
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
-    
-    const slideInterval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 6000);
-
+    const interval = setInterval(() => setCurrentSlide(s => (s + 1) % slides.length), 6000);
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      clearInterval(slideInterval);
+      clearInterval(interval);
     };
   }, []);
 
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      const offset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+    const el = document.getElementById(id);
+    if (el) {
+      window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
     }
     setIsMenuOpen(false);
   };
 
-  const primaryCTA = () => {
-    window.location.href = "mailto:info@innova-egypt.com";
-  };
+  const primaryCTA = () => window.location.href = "mailto:info@innova-egypt.com";
 
   return (
-    <div className="min-h-screen flex flex-col font-sans selection:bg-blue-600 selection:text-white overflow-x-hidden text-right" dir="rtl">
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-blue-600 selection:text-white" dir="rtl">
       
-      {/* Navigation Header */}
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? 'bg-white shadow-xl py-2' : 'bg-transparent py-5'}`}>
-        {!scrolled && <div className="absolute inset-0 bg-gradient-to-b from-slate-950/60 to-transparent pointer-events-none -z-10"></div>}
-        
+      {/* Navigation */}
+      <nav className={`fixed top-0 w-full z-[100] transition-all duration-500 ${scrolled ? 'bg-white/90 backdrop-blur-xl shadow-lg py-3' : 'bg-transparent py-5'}`}>
         <div className="container mx-auto px-6 flex justify-between items-center">
-          {/* Logo */}
-          <div className="flex items-center cursor-pointer group" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
-            <div className="h-14 w-auto flex items-center transition-transform group-hover:scale-105 duration-300">
-              <img src={LOGO_URL} alt="Innova Technology" className="h-full object-contain" />
+          
+          {/* Logo & Company Name Container */}
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="flex items-center gap-3 md:gap-4 cursor-pointer group"
+            onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}
+          >
+            <div className="h-10 md:h-12 flex-shrink-0">
+              <img 
+                src={LOGO_URL} 
+                alt="Innova" 
+                className="h-full object-contain transition-transform group-hover:scale-105" 
+              />
             </div>
-          </div>
+            <div className="flex flex-col items-start leading-tight">
+              <span className={`text-xl md:text-2xl font-black transition-colors ${scrolled ? 'text-slate-900' : 'text-white'}`}>
+                إنوفا تكنولوجي
+              </span>
+              <span className={`text-[8px] md:text-[10px] uppercase tracking-[0.2em] font-bold transition-colors ${scrolled ? 'text-blue-600' : 'text-blue-400'}`}>
+                Innova Technology
+              </span>
+            </div>
+          </motion.div>
 
-          {/* Links */}
-          <div className={`hidden md:flex items-center gap-8 ${scrolled ? 'text-slate-700' : 'text-white'}`}>
-            <button onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})} className="text-sm font-bold hover:text-blue-500 transition-colors">الرئيسية</button>
-            <button onClick={() => scrollToSection('solutions')} className="text-sm font-bold hover:text-blue-500 transition-colors">عن الشركة</button>
-            <button onClick={() => scrollToSection('services')} className="text-sm font-bold hover:text-blue-500 transition-colors">خدماتنا</button>
-            <button onClick={() => scrollToSection('contact')} className="text-sm font-bold hover:text-blue-500 transition-colors">اتصل بنا</button>
-            
-            <button 
+          {/* Desktop Links */}
+          <div className={`hidden md:flex items-center gap-10 ${scrolled ? 'text-slate-700' : 'text-white'}`}>
+            {['الرئيسية', 'عن الشركة', 'خدماتنا', 'اتصل بنا'].map((item, i) => (
+              <button 
+                key={item}
+                onClick={() => i === 0 ? window.scrollTo({top:0, behavior:'smooth'}) : scrollToSection(['solutions', 'services', 'contact'][i-1])}
+                className="text-sm font-black hover:text-blue-500 transition-colors relative group"
+              >
+                {item}
+                <span className="absolute -bottom-1 right-0 w-0 h-0.5 bg-blue-500 transition-all group-hover:w-full"></span>
+              </button>
+            ))}
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={primaryCTA}
-              className={`px-6 py-2.5 rounded-full text-sm font-black transition-all shadow-lg active:scale-95 border-2 ${scrolled ? 'bg-blue-600 border-blue-600 text-white hover:bg-slate-900 hover:border-slate-900' : 'bg-white border-white text-blue-600 hover:bg-transparent hover:text-white'}`}
+              className={`px-8 py-3 rounded-full text-sm font-black transition-all ${scrolled ? 'bg-blue-600 text-white shadow-blue-200 shadow-lg' : 'bg-white text-blue-600'}`}
             >
-              اطلب استشارة مجانية
-            </button>
+              إبدأ الآن
+            </motion.button>
           </div>
 
-          {/* Mobile Menu Toggle */}
-          <button className={`${scrolled ? 'text-slate-900' : 'text-white'} md:hidden p-2 rounded-lg bg-black/10`} onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          <button className={`${scrolled ? 'text-slate-900' : 'text-white'} md:hidden p-2`} onClick={() => setIsMenuOpen(true)}>
+            <Menu size={32} />
           </button>
-        </div>
-
-        {/* Mobile Navigation */}
-        <div className={`fixed inset-0 bg-slate-900 z-[60] flex flex-col items-center justify-center gap-8 transition-all duration-500 md:hidden ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0 pointer-events-none'}`}>
-          <button className="absolute top-6 right-6 text-white p-4" onClick={() => setIsMenuOpen(false)}>
-            <X size={40} />
-          </button>
-          <img src={LOGO_URL} alt="Innova" className="h-20 mb-8 brightness-0 invert" />
-          <button onClick={() => { scrollToSection('home'); window.scrollTo({top:0, behavior:'smooth'}); setIsMenuOpen(false); }} className="text-2xl font-bold text-white">الرئيسية</button>
-          <button onClick={() => scrollToSection('solutions')} className="text-2xl font-bold text-white">عن الشركة</button>
-          <button onClick={() => scrollToSection('services')} className="text-2xl font-bold text-white">خدماتنا</button>
-          <button onClick={() => scrollToSection('contact')} className="text-2xl font-bold text-white">اتصل بنا</button>
-          <button onClick={primaryCTA} className="px-10 py-4 bg-blue-600 text-white font-black rounded-full mt-4">تواصل الآن</button>
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section id="home" className="relative h-screen min-h-[700px] flex items-center overflow-hidden bg-slate-950">
-        {slides.map((slide, index) => (
-          <div 
-            key={index}
-            className={`absolute inset-0 transition-all duration-1000 ease-in-out ${index === currentSlide ? 'opacity-80 scale-100' : 'opacity-0 scale-105'}`}
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, x: '100%' }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: '100%' }}
+            className="fixed inset-0 z-[200] bg-slate-950 flex flex-col items-center justify-center p-10"
           >
-            <img src={slide.url} alt={slide.title} className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
-            <div className="absolute inset-0 bg-gradient-to-l from-slate-950/40 via-transparent to-transparent hidden lg:block"></div>
-          </div>
-        ))}
-        
-        <div className="container mx-auto px-6 relative z-10 pt-16">
-          <div className="max-w-4xl text-right">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600/40 backdrop-blur-md text-white rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest mb-6 border border-white/20">
-              <Zap size={14} className="text-blue-400" fill="currentColor" />
-              Innova.. Innovating Your Digital World
-            </div>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-6 leading-tight drop-shadow-2xl">
-              بنيتك التحتية <br/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-l from-blue-400 to-cyan-300">في منظومة واحدة</span>
-            </h1>
-            <p className="text-lg md:text-2xl text-slate-100 mb-10 max-w-2xl leading-relaxed font-bold drop-shadow-lg">
-              إنوفا تكنولوجي تدمج أرقى أجهزة الهاردوير مع أذكى الحلول البرمجية لبناء بيئة عمل رقمية تضمن لك السيادة والاستمرارية.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-5">
-              <button 
-                onClick={primaryCTA}
-                className="group px-10 py-5 bg-blue-600 text-white font-black rounded-full hover:bg-white hover:text-blue-600 transition-all shadow-2xl shadow-blue-600/40 flex items-center justify-center gap-3 text-lg"
-              >
-                اطلب عرض سعر متكامل
-                <ArrowLeft size={24} className="group-hover:-translate-x-2 transition-transform duration-300" />
-              </button>
-              <button 
-                onClick={() => scrollToSection('services')}
-                className="px-10 py-5 bg-white/20 backdrop-blur-md text-white font-bold rounded-full border border-white/30 hover:bg-white/40 transition-all flex items-center justify-center gap-2 text-lg"
-              >
-                استكشف خدماتنا
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Indicators */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-3 z-20">
-          {slides.map((_, i) => (
-            <button 
-              key={i} 
-              onClick={() => setCurrentSlide(i)}
-              className={`h-1.5 transition-all duration-500 rounded-full ${i === currentSlide ? 'w-12 bg-blue-500' : 'w-3 bg-white/30 hover:bg-white/50'}`}
-            ></button>
-          ))}
-        </div>
-      </section>
-
-      {/* Solutions / About Section */}
-      <section id="solutions" className="py-24 bg-white">
-        <div className="container mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-20 items-center">
-            <div className="relative group">
-              <div className="absolute -inset-4 bg-blue-600/5 rounded-[3rem] -rotate-2 group-hover:rotate-0 transition-transform duration-700"></div>
-              <img 
-                src="https://i.pinimg.com/736x/33/75/17/3375170b6d543c2704a7f920766ac5c9.jpg" 
-                alt="Infrastructure" 
-                className="relative rounded-[3rem] shadow-2xl z-10 w-full object-cover aspect-[4/3]"
-              />
-              <div className="absolute -bottom-8 -right-8 bg-white p-8 rounded-3xl shadow-2xl z-20 hidden md:block border border-slate-50">
-                <div className="flex items-center gap-4 mb-2">
-                  <div className="w-12 h-12 bg-green-100 text-green-600 rounded-2xl flex items-center justify-center">
-                    <ShieldCheck size={28} />
-                  </div>
-                  <div className="text-xl font-black text-slate-900">أمان وموثوقية</div>
-                </div>
-                <p className="text-slate-500 text-sm">ضمان 100% على كافة الأجهزة والأنظمة.</p>
+            <button className="absolute top-8 right-8 text-white p-2" onClick={() => setIsMenuOpen(false)}><X size={40} /></button>
+            
+            <div className="flex flex-col items-center gap-4 mb-16">
+              <img src={LOGO_URL} alt="Logo" className="h-20 object-contain" />
+              <div className="text-center">
+                <div className="text-2xl font-black text-white">إنوفا تكنولوجي</div>
+                <div className="text-[10px] text-blue-400 uppercase tracking-widest font-bold">Innova Technology</div>
               </div>
             </div>
 
-            <div className="space-y-8">
-              <div className="inline-block px-4 py-1.5 bg-blue-50 text-blue-600 rounded-full text-xs font-black uppercase">لماذا إنوفا؟</div>
-              <h2 className="text-4xl md:text-5xl font-black text-slate-900 leading-tight">شريكك الرقمي <span className="text-blue-600">من الألف إلى الياء</span></h2>
-              <p className="text-xl text-slate-600 leading-relaxed font-medium">
-                نحن لسنا مجرد شركة برمجيات، بل مطور تقني متكامل. نوفر لك الأجهزة الأصلية، ونصمم لك النظام الذي يديرها، ونضمن استقرارها بعقود صيانة احترافية.
-              </p>
-              
-              <div className="grid sm:grid-cols-2 gap-6">
-                <div className="p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-lg transition-all group">
-                  <Settings size={32} className="text-blue-600 mb-4 group-hover:scale-110 transition-transform" />
-                  <h4 className="font-black text-lg mb-2">حلول مخصصة</h4>
-                  <p className="text-slate-500 text-sm">أنظمة ERP وبرمجيات مصممة خصيصاً لحجم وطبيعة عملك.</p>
+            <div className="flex flex-col items-center gap-8">
+              {['الرئيسية', 'عن الشركة', 'خدماتنا', 'اتصل بنا'].map((item, i) => (
+                <button key={item} className="text-3xl font-black text-white hover:text-blue-500 transition-colors" onClick={() => i === 0 ? window.scrollTo({top:0, behavior:'smooth'}) : scrollToSection(['solutions', 'services', 'contact'][i-1])}>{item}</button>
+              ))}
+            </div>
+            
+            <button onClick={primaryCTA} className="mt-12 px-12 py-5 bg-blue-600 text-white font-black rounded-full shadow-2xl shadow-blue-600/30 w-full max-w-xs">
+              ابدأ مشروعك
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Hero Section */}
+      <section className="relative h-screen flex items-center overflow-hidden bg-slate-950">
+        <AnimatePresence mode="wait">
+          <motion.div 
+            key={currentSlide}
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 0.7, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.5 }}
+            className="absolute inset-0"
+          >
+            <img src={slides[currentSlide].url} className="w-full h-full object-cover" alt="Hero background" />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+          </motion.div>
+        </AnimatePresence>
+
+        <div className="container mx-auto px-6 relative z-10">
+          <motion.div 
+            variants={staggerContainer}
+            initial="initial"
+            animate="animate"
+            className="max-w-4xl text-right"
+          >
+            <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600/30 backdrop-blur-md border border-white/20 text-white rounded-full text-xs font-bold mb-8 uppercase tracking-widest">
+              <Zap size={14} className="text-blue-400 fill-blue-400" />
+              Innova.. Innovating Your Digital World
+            </motion.div>
+            
+            <motion.h1 variants={fadeInUp} className="text-5xl md:text-8xl font-black text-white mb-8 leading-[1.1]">
+              نبتكر لنبني <br/>
+              <span className="text-gradient">عالمك الرقمي</span>
+            </motion.h1>
+            
+            <motion.p variants={fadeInUp} className="text-xl md:text-3xl text-slate-300 mb-12 max-w-2xl font-medium leading-relaxed">
+              نحن الشريك الذي يجمع لك بين قوة العتاد وذكاء البرمجيات لتنطلق بأعمالك نحو المستقبل الرقمي الآمن والمتطور.
+            </motion.p>
+            
+            <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-6">
+              <button onClick={primaryCTA} className="px-12 py-5 bg-blue-600 text-white font-black rounded-full shadow-2xl shadow-blue-600/40 hover:scale-105 transition-transform flex items-center justify-center gap-3 text-lg">
+                اطلب استشارتك الآن
+                <ArrowLeft size={24} />
+              </button>
+              <button onClick={() => scrollToSection('services')} className="px-12 py-5 bg-white/10 backdrop-blur-md border border-white/20 text-white font-black rounded-full hover:bg-white/20 transition-all text-lg">
+                استكشف خدماتنا
+              </button>
+            </motion.div>
+          </motion.div>
+        </div>
+
+        {/* Floating Background Decorations */}
+        <motion.div 
+          animate={{ y: [0, -20, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-1/4 right-10 w-64 h-64 bg-blue-600/20 rounded-full blur-[100px] pointer-events-none"
+        />
+      </section>
+
+      {/* Problems/Solutions Section */}
+      <section id="solutions" className="py-32 bg-white overflow-hidden">
+        <div className="container mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-24 items-center">
+            <motion.div 
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="relative"
+            >
+              <div className="absolute -inset-10 bg-blue-50 rounded-[4rem] -rotate-3"></div>
+              <img src="https://i.pinimg.com/736x/33/75/17/3375170b6d543c2704a7f920766ac5c9.jpg" className="relative rounded-[3rem] shadow-2xl z-10 aspect-video object-cover" alt="Enterprise Solution" />
+              <div className="absolute -bottom-10 -right-10 glass-panel p-8 rounded-3xl shadow-xl z-20 border border-slate-100 hidden md:block">
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 bg-blue-600 text-white rounded-2xl flex items-center justify-center shadow-lg"><ShieldCheck size={30} /></div>
+                  <div>
+                    <h4 className="font-black text-xl text-slate-900">موثوقية تامة</h4>
+                    <p className="text-slate-500 text-sm">أجهزة أصلية بضمان معتمد</p>
+                  </div>
                 </div>
-                <div className="p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-lg transition-all group">
-                  <Globe size={32} className="text-blue-600 mb-4 group-hover:scale-110 transition-transform" />
-                  <h4 className="font-black text-lg mb-2">توريد عالمي</h4>
-                  <p className="text-slate-500 text-sm">نورد أحدث أجهزة Dell, HP و Cisco بأفضل الأسعار الرسمية.</p>
-                </div>
+              </div>
+            </motion.div>
+
+            <div className="space-y-8 text-right">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                <span className="px-4 py-1.5 bg-blue-50 text-blue-600 rounded-full text-xs font-black uppercase mb-6 inline-block">التميز الاستراتيجي</span>
+                <h2 className="text-4xl md:text-6xl font-black mb-8 leading-tight">شريكك التقني <span className="text-blue-600">الأكثر ثقة</span></h2>
+                <p className="text-xl text-slate-600 leading-relaxed font-medium">
+                  في إنوفا تكنولوجي، لا نبيع منتجات فقط، بل نصمم حلولاً متكاملة. نحن ندرك أن استقرار عملك يعتمد على تكامل البنية التحتية الصلبة مع البرمجيات الذكية، لذا وفرنا لك التميز في مكان واحد.
+                </p>
+              </motion.div>
+
+              <div className="grid sm:grid-cols-2 gap-8">
+                {[
+                  { icon: <Settings size={30} />, title: "أنظمة مخصصة", desc: "برمجيات مصممة خصيصاً لتناسب دورة عملك بدقة." },
+                  { icon: <Globe size={30} />, title: "توريد معتمد", desc: "أحدث عتاد HP, Dell, Cisco بأفضل الأسعار والضمانات." }
+                ].map((item, idx) => (
+                  <motion.div 
+                    key={idx}
+                    whileHover={{ y: -5 }}
+                    className="p-8 rounded-3xl bg-slate-50 border border-slate-100 transition-all hover:shadow-xl group"
+                  >
+                    <div className="text-blue-600 mb-4 group-hover:scale-110 transition-transform">{item.icon}</div>
+                    <h4 className="text-xl font-black mb-2 text-slate-900">{item.title}</h4>
+                    <p className="text-slate-500 text-sm font-medium">{item.desc}</p>
+                  </motion.div>
+                ))}
               </div>
             </div>
           </div>
@@ -266,188 +316,226 @@ const App: React.FC = () => {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-24 bg-slate-50">
-        <div className="container mx-auto px-6 text-center">
-          <h2 className="text-4xl md:text-6xl font-black mb-6">خدماتنا <span className="text-blue-600">المتكاملة</span></h2>
-          <p className="text-slate-600 text-xl font-medium max-w-3xl mx-auto mb-16">باقة شاملة من الحلول الرقمية التي تغطي كافة احتياجات البنية التحتية والبرمجية لمؤسستك.</p>
-          
+      <section id="services" className="py-32 bg-slate-50 relative overflow-hidden">
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="text-center max-w-3xl mx-auto mb-20">
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-4xl md:text-7xl font-black mb-8"
+            >
+              خدمات <span className="text-blue-600">مبتكرة</span>
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="text-xl text-slate-500 font-medium"
+            >
+              نقدم منظومة تقنية شاملة تجمع بين دقة الأجهزة وذكاء الأنظمة البرمجية لتحقيق أقصى درجات الكفاءة التشغيلية لمؤسستك.
+            </motion.p>
+          </div>
+
           <div className="grid md:grid-cols-3 gap-10">
             {servicesData.map((service, idx) => (
-              <div 
-                key={idx} 
+              <motion.div 
+                key={idx}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+                whileHover={{ y: -10 }}
                 onClick={() => setActiveService(idx)}
-                className="group bg-white rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-3 transition-all duration-500 border border-slate-100 flex flex-col cursor-pointer"
+                className="group bg-white rounded-[3rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 cursor-pointer border border-slate-100 flex flex-col"
               >
-                <div className="h-56 overflow-hidden relative">
+                <div className="h-64 overflow-hidden relative">
                   <img src={service.img} alt={service.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                   <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent"></div>
                 </div>
-                <div className="p-8 pt-0 flex flex-col items-start text-right -mt-10 relative z-10">
-                  <div className="w-16 h-16 bg-blue-600 text-white rounded-2xl flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform mb-6">
+                <div className="p-10 -mt-12 relative z-10 flex flex-col items-start">
+                  <div className="w-20 h-20 bg-blue-600 text-white rounded-3xl flex items-center justify-center shadow-xl mb-8 group-hover:rotate-6 transition-transform">
                     {service.icon}
                   </div>
-                  <h3 className="text-2xl font-black mb-4 group-hover:text-blue-600 transition-colors">{service.title}</h3>
-                  <p className="text-slate-500 leading-relaxed mb-8 font-medium text-sm">{service.description}</p>
-                  
-                  <div className="inline-flex items-center gap-2 px-6 py-3 bg-blue-50 text-blue-600 font-black text-sm rounded-full transition-all duration-300 group-hover:bg-blue-600 group-hover:text-white group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-blue-200">
-                    اكتشف المزيد 
-                    <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
+                  <h3 className="text-2xl font-black mb-4 group-hover:text-blue-600 transition-colors text-slate-900">{service.title}</h3>
+                  <p className="text-slate-500 text-sm leading-relaxed mb-8 font-medium text-right">{service.description}</p>
+                  <div className="inline-flex items-center gap-3 px-6 py-3 bg-blue-50 text-blue-600 font-black text-xs rounded-full group-hover:bg-blue-600 group-hover:text-white transition-all">
+                    عرض التفاصيل <ArrowLeft size={16} />
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-24 bg-white">
+      {/* Trust / Features Section */}
+      <section className="py-32 bg-white">
         <div className="container mx-auto px-6">
-          <div className="bg-slate-900 rounded-[3rem] p-12 md:p-24 text-white relative overflow-hidden">
-            <div className="absolute inset-0 opacity-10">
-              <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2000" className="w-full h-full object-cover" />
+          <div className="bg-slate-950 rounded-[4rem] p-12 md:p-24 text-white relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-full h-full opacity-10 pointer-events-none">
+              <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-600 rounded-full blur-[150px]"></div>
             </div>
-            <div className="relative z-10 grid lg:grid-cols-2 gap-16 items-center">
-              <div>
-                <h2 className="text-4xl md:text-5xl font-black mb-8 leading-tight">الريادة تبدأ باختيار <br/><span className="text-blue-400">الشريك الصح</span></h2>
-                <div className="space-y-6">
-                  <div className="flex gap-4">
-                    <CheckCircle2 size={24} className="text-blue-400 flex-shrink-0" />
-                    <p className="text-slate-300 font-medium">مورد رسمي معتمد لأكبر العلامات التجارية العالمية.</p>
-                  </div>
-                  <div className="flex gap-4">
-                    <CheckCircle2 size={24} className="text-blue-400 flex-shrink-0" />
-                    <p className="text-slate-300 font-medium">فريق برمجيات متخصص في بناء أنظمة ERP ضخمة.</p>
-                  </div>
-                  <div className="flex gap-4">
-                    <CheckCircle2 size={24} className="text-blue-400 flex-shrink-0" />
-                    <p className="text-slate-300 font-medium">دعم فني واستجابة سريعة للأعطال على مدار الساعة.</p>
-                  </div>
+            
+            <div className="grid lg:grid-cols-2 gap-20 items-center relative z-10">
+              <div className="text-right">
+                <h2 className="text-4xl md:text-6xl font-black mb-10 leading-tight text-white">أعمالك في <span className="text-blue-400">أيدٍ أمينة</span></h2>
+                <div className="space-y-8">
+                  {[
+                    "فريق هندسي متخصص في بناء الأنظمة المعقدة.",
+                    "عقود صيانة سنوية تضمن الاستجابة التقنية الفورية.",
+                    "حلول قابلة للتوسع الكامل لمواكبة نمو مؤسستك المستمر."
+                  ].map((text, i) => (
+                    <motion.div 
+                      key={i}
+                      initial={{ opacity: 0, x: 20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.1 }}
+                      className="flex gap-4 items-center justify-start flex-row-reverse"
+                    >
+                      <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0"><CheckCircle2 size={18} className="text-white" /></div>
+                      <p className="text-lg text-slate-300 font-bold">{text}</p>
+                    </motion.div>
+                  ))}
                 </div>
               </div>
+              
               <div className="grid grid-cols-2 gap-6">
-                <div className="p-8 bg-white/5 rounded-3xl border border-white/10 text-center hover:bg-white/10 transition-all">
-                  <div className="text-4xl font-black text-blue-400 mb-2">+100</div>
-                  <div className="text-xs uppercase tracking-widest text-slate-400 font-bold">عميل سعيد</div>
-                </div>
-                <div className="p-8 bg-white/5 rounded-3xl border border-white/10 text-center hover:bg-white/10 transition-all">
-                  <div className="text-4xl font-black text-blue-400 mb-2">24/7</div>
-                  <div className="text-xs uppercase tracking-widest text-slate-400 font-bold">دعم فني</div>
-                </div>
-                <div className="p-8 bg-white/5 rounded-3xl border border-white/10 text-center hover:bg-white/10 transition-all">
-                  <div className="text-4xl font-black text-blue-400 mb-2">100%</div>
-                  <div className="text-xs uppercase tracking-widest text-slate-400 font-bold">جودة أصلية</div>
-                </div>
-                <div className="p-8 bg-white/5 rounded-3xl border border-white/10 text-center hover:bg-white/10 transition-all">
-                  <div className="text-4xl font-black text-blue-400 mb-2">+15</div>
-                  <div className="text-xs uppercase tracking-widest text-slate-400 font-bold">سنة خبرة</div>
-                </div>
+                {[
+                  { label: "عميل نشط", val: "+150" },
+                  { label: "دعم فني", val: "24/7" },
+                  { label: "جودة أصلية", val: "100%" },
+                  { label: "عام من الخبرة", val: "+15" }
+                ].map((stat, i) => (
+                  <motion.div 
+                    key={i}
+                    whileHover={{ scale: 1.05 }}
+                    className="p-10 bg-white/5 rounded-[2.5rem] border border-white/10 text-center backdrop-blur-sm"
+                  >
+                    <div className="text-4xl font-black text-blue-400 mb-2">{stat.val}</div>
+                    <div className="text-xs uppercase tracking-widest text-slate-500 font-black">{stat.label}</div>
+                  </motion.div>
+                ))}
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="py-24 bg-white">
+      {/* CTA Section */}
+      <section id="contact" className="py-32 bg-white">
         <div className="container mx-auto px-6">
-          <div className="max-w-5xl mx-auto bg-slate-50 rounded-[3rem] p-10 md:p-20 text-center border border-slate-100 shadow-xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 rounded-full blur-3xl"></div>
-            <div className="absolute bottom-0 left-0 w-32 h-32 bg-cyan-600/10 rounded-full blur-3xl"></div>
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="max-w-6xl mx-auto glass-panel rounded-[4rem] p-12 md:p-24 text-center border-slate-100 shadow-2xl relative overflow-hidden"
+          >
+            <div className="absolute -top-24 -right-24 w-64 h-64 bg-blue-100 rounded-full blur-3xl opacity-50"></div>
+            <h2 className="text-4xl md:text-7xl font-black mb-10 leading-tight">هل أنت مستعد <br/> <span className="text-blue-600">للانطلاق رقمياً؟</span></h2>
+            <p className="text-xl md:text-2xl text-slate-500 mb-16 max-w-2xl mx-auto font-medium leading-relaxed">اترك تعقيدات التكنولوجيا لنا، وتفرغ أنت لإدارة وتوسيع نجاحك. فريقنا الهندسي جاهز لبناء منظومتك الخاصة الآن.</p>
             
-            <h2 className="text-4xl md:text-6xl font-black text-slate-900 mb-8 leading-tight">ابدأ تحولك <span className="text-blue-600">الرقمي الآن</span></h2>
-            <p className="text-xl text-slate-600 mb-12 max-w-2xl mx-auto font-medium leading-relaxed">فريق مبيعاتنا متاح للرد على استفساراتكم وتقديم عرض سعر مجاني مخصص لاحتياجاتكم.</p>
-            
-            <div className="flex flex-col md:flex-row gap-6 justify-center items-center mb-16">
-              <button onClick={primaryCTA} className="px-12 py-5 bg-blue-600 text-white font-black rounded-full hover:scale-105 transition-all shadow-xl shadow-blue-200 text-xl">تواصل معنا بريدياً</button>
-              <div className="flex items-center gap-4 text-slate-900">
-                <div className="w-14 h-14 bg-white rounded-2xl shadow-lg flex items-center justify-center text-blue-600 border border-slate-100">
-                  <Phone size={28} />
-                </div>
+            <div className="flex flex-col md:flex-row gap-8 justify-center items-center">
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={primaryCTA}
+                className="px-16 py-6 bg-blue-600 text-white font-black rounded-full shadow-2xl shadow-blue-200 text-xl w-full md:w-auto"
+              >
+                تواصل مع المبيعات
+              </motion.button>
+              <div className="flex items-center gap-4 text-slate-900 bg-white p-4 rounded-3xl border border-slate-100 shadow-sm">
+                <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600"><Phone size={32} /></div>
                 <div className="text-right">
-                  <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">مبيعات ودعم</div>
-                  <div dir="ltr" className="text-2xl font-black tracking-tight">01288333348</div>
+                  <div className="text-xs font-black text-slate-400 tracking-widest uppercase">تواصل مباشر</div>
+                  <div dir="ltr" className="text-3xl font-black tracking-tighter">01288333348</div>
                 </div>
               </div>
             </div>
-
-            <div className="flex justify-center gap-10">
-              <div className="flex items-center gap-2 text-slate-500 text-sm font-bold">
-                <Mail size={18} />
-                info@innova-egypt.com
-              </div>
-            </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-16 bg-slate-900 text-white">
-        <div className="container mx-auto px-6">
-          <div className="grid lg:grid-cols-4 gap-12 mb-16 border-b border-white/5 pb-16">
-            <div className="lg:col-span-2 space-y-6">
-              <img src={LOGO_URL} alt="Logo" className="h-16 brightness-0 invert" />
-              <p className="text-slate-400 font-medium max-w-sm leading-relaxed">إنوفا تكنولوجي للحلول المتكاملة ونظم المعلومات. القائد في توريد العتاد وبناء البرمجيات المتخصصة في مصر.</p>
-              <div className="flex gap-4">
-                <button className="w-10 h-10 rounded-full bg-white/5 hover:bg-blue-600 transition-all flex items-center justify-center"><Globe size={20} /></button>
-                <button className="w-10 h-10 rounded-full bg-white/5 hover:bg-blue-600 transition-all flex items-center justify-center"><Mail size={20} /></button>
+      <footer className="py-20 bg-slate-950 text-white overflow-hidden relative">
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="grid lg:grid-cols-4 gap-16 mb-20 text-right">
+            <div className="lg:col-span-2 space-y-8">
+              <div className="flex items-center gap-4 justify-start flex-row-reverse">
+                <img src={LOGO_URL} alt="Footer Logo" className="h-16 object-contain" />
+                <div className="text-right">
+                  <div className="text-2xl font-black text-white">إنوفا تكنولوجي</div>
+                  <div className="text-[10px] text-blue-500 font-bold uppercase tracking-widest">Innova Technology</div>
+                </div>
+              </div>
+              <p className="text-slate-400 text-lg max-w-sm font-medium leading-relaxed">إنوفا تكنولوجي للحلول المتكاملة ونظم المعلومات. القائد المبتكر في توريد العتاد العالمي وبناء البرمجيات المتخصصة.</p>
+              <div className="flex gap-4 justify-end">
+                <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-blue-600 transition-colors cursor-pointer"><Globe size={20} /></div>
+                <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-blue-600 transition-colors cursor-pointer"><Mail size={20} /></div>
               </div>
             </div>
-            <div className="space-y-6">
-              <h5 className="font-black text-xl">روابط سريعة</h5>
-              <div className="flex flex-col gap-4 text-slate-400 font-bold">
-                <button onClick={() => window.scrollTo({top:0, behavior:'smooth'})} className="hover:text-white transition-colors text-right text-sm">الرئيسية</button>
-                <button onClick={() => scrollToSection('solutions')} className="hover:text-white transition-colors text-right text-sm">عن الشركة</button>
-                <button onClick={() => scrollToSection('services')} className="hover:text-white transition-colors text-right text-sm">خدماتنا</button>
-                <button onClick={() => scrollToSection('contact')} className="hover:text-white transition-colors text-right text-sm">اتصل بنا</button>
-              </div>
+            <div>
+              <h5 className="text-xl font-black mb-8 text-white">استكشف</h5>
+              <ul className="space-y-4 text-slate-500 font-bold">
+                <li><button onClick={() => window.scrollTo({top:0, behavior:'smooth'})} className="hover:text-blue-500 transition-colors">الرئيسية</button></li>
+                <li><button onClick={() => scrollToSection('solutions')} className="hover:text-blue-500 transition-colors">عن الشركة</button></li>
+                <li><button onClick={() => scrollToSection('services')} className="hover:text-blue-500 transition-colors">خدماتنا</button></li>
+                <li><button onClick={() => scrollToSection('contact')} className="hover:text-blue-500 transition-colors">اتصل بنا</button></li>
+              </ul>
             </div>
-            <div className="space-y-6">
-              <h5 className="font-black text-xl">خدماتنا</h5>
-              <div className="flex flex-col gap-4 text-slate-400 font-bold">
-                <button onClick={() => { scrollToSection('services'); setActiveService(0); }} className="hover:text-white transition-colors text-right text-sm">تطوير البرمجيات</button>
-                <button onClick={() => { scrollToSection('services'); setActiveService(1); }} className="hover:text-white transition-colors text-right text-sm">توريد العتاد</button>
-                <button onClick={() => { scrollToSection('services'); setActiveService(2); }} className="hover:text-white transition-colors text-right text-sm">الشبكات والربط</button>
-              </div>
+            <div>
+              <h5 className="text-xl font-black mb-8 text-white">خدماتنا</h5>
+              <ul className="space-y-4 text-slate-500 font-bold">
+                <li>تطوير برمجيات المؤسسات</li>
+                <li>توريد الخوادم والسيرفرات</li>
+                <li>حلول الربط الشبكي المتقدم</li>
+                <li>عقود الصيانة التقنية</li>
+              </ul>
             </div>
           </div>
-          <div className="text-center text-slate-500 font-bold text-sm">
-            جميع الحقوق محفوظة &copy; {new Date().getFullYear()} إنوفا تكنولوجي - Innova Technology
+          <div className="pt-10 border-t border-white/5 text-center text-slate-600 font-bold text-sm">
+            جميع الحقوق محفوظة &copy; {new Date().getFullYear()} إنوفا تكنولوجي للحلول المتكاملة - Innova Technology
           </div>
         </div>
       </footer>
 
       {/* Service Modal */}
-      {activeService !== null && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 backdrop-blur-md bg-slate-950/80 animate-in fade-in duration-300">
-          <div className="bg-white rounded-[3rem] w-full max-w-4xl overflow-hidden relative shadow-2xl animate-in zoom-in-95 duration-300">
-            <button 
-              onClick={() => setActiveService(null)} 
-              className="absolute top-6 right-6 z-20 bg-slate-100 hover:bg-red-500 hover:text-white p-3 rounded-full transition-all"
+      <AnimatePresence>
+        {activeService !== null && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[300] flex items-center justify-center p-6 bg-slate-950/90 backdrop-blur-xl"
+          >
+            <motion.div 
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              className="bg-white rounded-[4rem] w-full max-w-5xl overflow-hidden relative shadow-2xl"
             >
-              <X size={24} />
-            </button>
-            <div className="grid md:grid-cols-2">
-              <div className="h-64 md:h-auto overflow-hidden">
-                <img src={servicesData[activeService].img} alt={servicesData[activeService].title} className="w-full h-full object-cover" />
+              <button onClick={() => setActiveService(null)} className="absolute top-8 right-8 z-20 bg-slate-100 hover:bg-red-500 hover:text-white p-4 rounded-full transition-all">
+                <X size={28} />
+              </button>
+              <div className="grid md:grid-cols-2 h-full">
+                <div className="h-72 md:h-auto overflow-hidden">
+                  <img src={servicesData[activeService].img} className="w-full h-full object-cover" alt={servicesData[activeService].title} />
+                </div>
+                <div className="p-12 md:p-20 flex flex-col justify-center text-right">
+                  <div className="text-blue-600 mb-8">{servicesData[activeService].icon}</div>
+                  <h3 className="text-4xl font-black mb-8 text-slate-900">{servicesData[activeService].title}</h3>
+                  <p className="text-slate-600 text-xl leading-relaxed mb-12 font-medium">
+                    {servicesData[activeService].details}
+                  </p>
+                  <button onClick={() => { primaryCTA(); setActiveService(null); }} className="w-full py-6 bg-blue-600 text-white font-black rounded-full shadow-2xl shadow-blue-200 text-xl">اطلب الخدمة الآن</button>
+                </div>
               </div>
-              <div className="p-10 md:p-16 flex flex-col justify-center">
-                <div className="text-blue-600 mb-6">{servicesData[activeService].icon}</div>
-                <h3 className="text-3xl font-black mb-6">{servicesData[activeService].title}</h3>
-                <p className="text-slate-600 text-lg leading-relaxed mb-10 font-medium">
-                  {servicesData[activeService].details}
-                </p>
-                <button 
-                  onClick={() => { primaryCTA(); setActiveService(null); }}
-                  className="w-full py-5 bg-blue-600 text-white font-black rounded-full hover:bg-slate-900 transition-all shadow-xl shadow-blue-200"
-                >
-                  اطلب استشارة حول هذه الخدمة
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </div>
   );
