@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { 
   ArrowLeft, ArrowRight, Layers, Phone, Mail, Monitor, 
   Database, Zap, Menu, X, MessageCircle, 
-  ShieldCheck, Target, ExternalLink, Sparkles, Globe
+  ShieldCheck, Target, ExternalLink, Sparkles, Globe, Settings, Cpu, HardDrive
 } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useSpring, Variants } from 'framer-motion';
 
@@ -15,76 +15,76 @@ const translations = {
     dir: 'ltr',
     nav: {
       home: 'Home',
-      about: 'About Us',
+      about: 'Strategy',
       services: 'Services',
-      contact: 'Contact Us',
-      startProject: 'Start Project'
+      contact: 'Consultation',
+      startProject: 'Get Started'
     },
     hero: [
       {
-        badge: 'Innova Prestige Edition',
-        title: 'Smart Digital Future',
-        sub: 'We innovate solutions that give your business the absolute edge in a constantly changing market.'
+        badge: 'Strategic IT Partner',
+        title: 'Innova.. Innovating Your Digital World',
+        sub: 'Bridging the gap between growing business needs and advanced technology through a unique integrated solutions model in Egypt.'
       },
       {
-        badge: 'Advanced Infrastructure',
-        title: 'Cutting-edge Technology',
-        sub: 'We supply the finest global hardware to ensure your operations stay stable with the latest tech.'
+        badge: 'Enterprise Infrastructure',
+        title: 'Robust Hardware & Global Standards',
+        sub: 'Supplying high-quality workstations, servers, and storage solutions from global brands to ensure your operational stability.'
       },
       {
-        badge: 'Integrated Cyber Security',
-        title: 'Safe Data Environment',
-        sub: 'Your data security is our top priority to ensure safe and sustainable growth for your organization.'
+        badge: 'Digital Transformation',
+        title: 'Bespoke Software & Management Systems',
+        sub: 'Custom-built web and mobile applications designed to enhance efficiency and drive scalable digital growth.'
       }
     ],
     heroButtons: {
-      start: 'Start Now',
-      explore: 'Explore Solutions'
+      start: 'Partner With Us',
+      explore: 'View Services'
     },
     about: {
-      badge: 'About Us',
-      title: 'Technical Excellence Starts Here',
-      desc: 'We are not just a technology company, but success partners who believe that innovation is the only key to leadership. We combine deep engineering expertise with the latest software technologies.',
+      badge: 'Company Positioning',
+      title: 'Not Just a Vendor, But a Long-term Partner',
+      desc: 'Innova Technology is a strategic IT partner focused on business continuity. We combine custom software development, hardware supply, and infrastructure under one roof to empower Egyptian institutions.',
       cards: [
-        { title: 'Sharp Vision', desc: 'We analyze your needs precisely to map out the path to success.' },
-        { title: 'Total Reliability', desc: 'We commit to the highest international security and quality standards.' }
+        { title: 'Vision', desc: 'To be the first-choice IT partner for digital transformation in Egypt.' },
+        { title: 'Mission', desc: 'Building smart, reliable technical environments through tailored solutions and robust hardware.' }
       ],
-      stats: 'Years of Experience'
+      stats: 'Years of Strategy'
     },
     services: {
-      badge: 'Our Solutions',
-      title: 'Covering All Digital Requirements',
-      sub: 'An integrated ecosystem of technical services designed specifically to support your organization\'s growth.',
+      badge: 'Core Services',
+      title: 'One-Stop Integrated IT Solutions',
+      sub: 'Comprehensive technology ecosystems designed to ensure operational stability and business efficiency.',
       list: [
         { 
-          title: 'Software Solutions', 
-          desc: 'Developing advanced ERP systems and innovative mobile apps focused on user experience.'
+          title: 'Software Development', 
+          desc: 'Web applications, iOS/Android mobile apps, and custom management systems built to modern standards.'
         },
         { 
-          title: 'Infrastructure', 
-          desc: 'Supplying the finest types of servers and workstations from major global companies.'
+          title: 'Hardware Supply', 
+          desc: 'High-quality computers, workstations, servers, and networking essentials from leading global brands.'
         },
         { 
-          title: 'Data Management', 
-          desc: 'Designing and implementing data centers and equipping networks with the highest levels of efficiency.'
+          title: 'Consulting & Support', 
+          desc: 'Strategic technical consulting, system setup, maintenance contracts, and ongoing technical support.'
         }
       ],
-      cta: 'Get Consultation',
-      premium: 'Premium Service'
+      cta: 'Explore Solutions',
+      premium: 'Integrated Model'
     },
     cta: {
-      badge: "Let's Talk Business",
-      title: 'Ready to Launch Your Digital Future?',
-      sub: 'Contact us today to receive a complete technical study for your project by industry experts.',
-      button: 'Book Your Appointment',
-      phoneLabel: 'Direct Phone Call'
+      badge: "Secure Your Digital Growth",
+      title: 'Ready to Stabilize Your Technical Environment?',
+      sub: 'Join the businesses across Egypt that trust Innova for efficiency and scalable growth. Request your technical study today.',
+      button: 'Request Consultation',
+      phoneLabel: 'B2B Priority Line'
     },
     footer: {
-      desc: 'We are redefining the concept of integrated solutions, where cutting-edge technology meets creative vision to create real value for your business.',
-      browse: 'Browse',
+      desc: 'Innova Technology for Integrated Solutions & IT. A long-term technology partner focused on business continuity and digital growth in the Egyptian market.',
+      browse: 'Navigation',
       hq: 'Headquarters',
       address: 'Cairo, Egypt \r\n Fifth Settlement',
-      copyright: '',
+      copyright: 'Innovating Your Digital World.',
       privacy: 'Privacy Policy',
       terms: 'Terms of Service',
       enjaz: 'Designed by Enjaz Smart Solutions'
@@ -94,76 +94,76 @@ const translations = {
     dir: 'rtl',
     nav: {
       home: 'الرئيسية',
-      about: 'من نحن',
+      about: 'الاستراتيجية',
       services: 'خدماتنا',
-      contact: 'تواصل معنا',
-      startProject: 'إبدأ مشروعك'
+      contact: 'طلب استشارة',
+      startProject: 'إبدأ الآن'
     },
     hero: [
       {
-        badge: 'إصدار إنوفا المتميز',
-        title: 'مستقبل رقمي ذكي',
-        sub: 'نبتكر الحلول التي تمنح أعمالك الأفضلية المطلقة في سوق دائم التغير.'
+        badge: 'شريك تقني استراتيجي',
+        title: 'إنوفا.. نبتكر عالمك الرقمي',
+        sub: 'نسد الفجوة بين احتياجات الأعمال المتنامية والتكنولوجيا المتقدمة من خلال نموذج الحلول المتكاملة في مصر.'
       },
       {
-        badge: 'بنية تحتية متطورة',
-        title: 'تكنولوجيا متقدمة',
-        sub: 'نورد أفضل العتاد العالمي لضمان استقرار عملياتك بأحدث التكنولوجيات.'
+        badge: 'البنية التحتية للمؤسسات',
+        title: 'عتاد قوي ومعايير عالمية',
+        sub: 'تجهيز بيئات العمل بأرقى السيرفرات ومحطات العمل العالمية لضمان استقرار عملياتك التشغيلية.'
       },
       {
-        badge: 'أمان سيبراني متكامل',
-        title: 'بيئة بيانات آمنة',
-        sub: 'حماية بياناتك هي أولويتنا القصوى لضمان نمو آمن ومستدام لمؤسستك.'
+        badge: 'التحول الرقمي',
+        title: 'برمجيات مخصصة وأنظمة إدارية',
+        sub: 'تطوير تطبيقات الويب والجوال المبتكرة المصممة لتعزيز الكفاءة ودفع عجلة النمو الرقمي.'
       }
     ],
     heroButtons: {
-      start: 'إبدأ الآن',
-      explore: 'استكشف حلولنا'
+      start: 'كن شريكنا',
+      explore: 'استكشف الخدمات'
     },
     about: {
-      badge: 'من نحن',
-      title: 'التميز التقني يبدأ من هنا',
-      desc: 'نحن لسنا مجرد شركة تقنية، بل شركاء نجاح نؤمن بأن الابتكار هو المفتاح الوحيد للريادة. نجمع بين الخبرة الهندسية العميقة وأحدث التقنيات البرمجية.',
+      badge: 'مكانة الشركة',
+      title: 'لسنا مجرد مورد، نحن شريك نجاح',
+      desc: 'إنوفا تكنولوجي هي شريك تقني استراتيجي يركز على استمرارية الأعمال. نجمع بين تطوير البرمجيات، توريد الأجهزة، والبنية التحتية تحت سقف واحد لتمكين المؤسسات المصرية.',
       cards: [
-        { title: 'رؤية ثاقبة', desc: 'نحلل احتياجاتك بدقة لنرسم طريق النجاح.' },
-        { title: 'موثوقية تامة', desc: 'نلتزم بأعلى معايير الأمان والجودة العالمية.' }
+        { title: 'الرؤية', desc: 'أن نكون الخيار الأول والشركاء الأكثر ثقة للتحول الرقمي في مصر.' },
+        { title: 'المهمة', desc: 'بناء بيئات تقنية ذكية وموثوقة عبر حلول برمجية مخصصة وعتاد قوي يضمن الاستقرار.' }
       ],
-      stats: 'سنة من الخبرة'
+      stats: 'سنة من الاستراتيجية'
     },
     services: {
-      badge: 'حلولنا',
-      title: 'نغطي كافة المتطلبات الرقمية',
-      sub: 'منظومة متكاملة من الخدمات التقنية المصممة خصيصاً لدعم نمو مؤسستك.',
+      badge: 'الخدمات الجوهرية',
+      title: 'منظومة الحلول التقنية المتكاملة',
+      sub: 'أنظمة تكنولوجية شاملة مصممة لضمان استقرار العمليات وكفاءة الأعمال التشغيلية.',
       list: [
         { 
-          title: 'الحلول البرمجية', 
-          desc: 'تطوير أنظمة متطورة وتطبيقات جوال مبتكرة تركز على تجربة المستخدم.'
+          title: 'تطوير البرمجيات', 
+          desc: 'تطبيقات الويب، الجوال (iOS/Android)، وأنظمة الإدارة الرقمية وفق أحدث المعايير العالمية.'
         },
         { 
-          title: 'البنية التحتية', 
-          desc: 'توريد أرقى أنواع السيرفرات ومحطات العمل من كبرى الشركات العالمية.'
+          title: 'توريد الأجهزة والعتاد', 
+          desc: 'أجهزة الكمبيوتر، السيرفرات، وحدات التخزين، ومستلزمات الشبكات من كبرى العلامات العالمية.'
         },
         { 
-          title: 'إدارة البيانات', 
-          desc: 'تصميم وتنفيذ مراكز البيانات وتجهيز الشبكات بأعلى درجات الكفاءة والأمان.'
+          title: 'الاستشارات والدعم', 
+          desc: 'استشارات تقنية، إعداد الأنظمة، عقود الصيانة، والدعم الفني المستمر لضمان استمرارية العمل.'
         }
       ],
-      cta: 'احصل على استشارة',
-      premium: 'خدمة متميزة'
+      cta: 'استكشف الحلول',
+      premium: 'نموذج متكامل'
     },
     cta: {
-      badge: "دعنا نتحدث عن عملك",
-      title: 'جاهز لتدشين مستقبلك الرقمي؟',
-      sub: 'تواصل معنا اليوم لتحصل على دراسة تقنية متكاملة لمشروعك بأيدي خبراء الصناعة.',
-      button: 'احجز موعدك الآن',
-      phoneLabel: 'اتصال هاتفي مباشر'
+      badge: "أمن نموك الرقمي",
+      title: 'جاهز لضمان استقرار بيئتك التقنية؟',
+      sub: 'انضم للمؤسسات التي تثق في إنوفا لرفع الكفاءة وتحقيق نمو قابل للتوسع. اطلب دراستك التقنية اليوم.',
+      button: 'اطلب استشارة فنية',
+      phoneLabel: 'خط تواصل الشركات المباشر'
     },
     footer: {
-      desc: 'نحن نعيد تعريف مفهوم الحلول المتكاملة، حيث تجتمع التكنولوجيا المتطورة مع الرؤية الإبداعية لخلق قيمة حقيقية لأعمالكم.',
+      desc: 'إنوفا تكنولوجي للحلول المتكاملة وتكنولوجيا المعلومات. شريك تكنولوجي طويل الأمد يركز على استمرارية الأعمال والنمو الرقمي في السوق المصري.',
       browse: 'تصفح',
       hq: 'المقر الرئيسي',
       address: 'القاهرة، جمهورية مصر العربية \r\n التجمع الخامس',
-      copyright: 'صُنع للتميز.',
+      copyright: 'نبتكر عالمك الرقمي.',
       privacy: 'سياسة الخصوصية',
       terms: 'شروط الخدمة',
       enjaz: 'تم التصميم بواسطة شركة إنجاز للحلول الذكية'
@@ -284,7 +284,7 @@ const App: React.FC = () => {
                 {lang === 'ar' ? 'إنوفا تكنولوجي' : 'Innova Technology'}
               </div>
               <div className={`text-[9px] font-black uppercase tracking-widest mt-1 ${scrolled ? 'text-blue-600' : 'text-blue-400'}`}>
-                {lang === 'ar' ? 'تطور رقمي' : 'Digital Evolution'}
+                {lang === 'ar' ? 'نبتكر عالمك الرقمي' : 'Innovating Your Digital World'}
               </div>
             </div>
           </motion.div>
@@ -424,7 +424,7 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* About Section */}
+      {/* About Section - Strategy & Positioning */}
       <section id="about" className="py-24 lg:py-48 bg-white overflow-hidden">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="grid lg:grid-cols-2 gap-24 items-center">
@@ -467,11 +467,11 @@ const App: React.FC = () => {
             >
               <div className="absolute -inset-10 bg-blue-600/5 rounded-[4rem] -rotate-3 blur-2xl animate-pulse" />
               <div className="relative rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white group">
-                <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=100&w=1000" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Office" />
+                <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=100&w=1000" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Strategic Partnership" />
                 <div className="absolute inset-0 bg-blue-600/10 group-hover:opacity-0 transition-opacity duration-500" />
               </div>
               <div className={`absolute -bottom-10 ${lang === 'ar' ? '-right' : '-left'}-10 bg-white p-8 rounded-[2rem] shadow-2xl border border-slate-50 hidden md:block`}>
-                <div className="text-4xl font-black text-blue-600 mb-1">+15</div>
+                <div className="text-4xl font-black text-blue-600 mb-1">+12</div>
                 <div className="text-[10px] font-black uppercase tracking-widest text-slate-400">{t.about.stats}</div>
               </div>
             </motion.div>
@@ -479,7 +479,7 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* Services Section */}
+      {/* Services Section - Core Offerings */}
       <section id="services" className="py-24 lg:py-48 bg-slate-50 relative overflow-hidden">
         <div className="container mx-auto px-6 lg:px-12 relative z-10">
           <SectionHeading 
@@ -500,7 +500,7 @@ const App: React.FC = () => {
                     src={[
                       "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=800",
                       "https://i.pinimg.com/1200x/97/dc/76/97dc76f78aadddc25ea19d11ac39e864.jpg",
-                      "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=800"
+                      "https://i.pinimg.com/1200x/f9/b7/3a/f9b73a99e3c85c768de3a5717b156ed7.jpg"
                     ][i]} 
                     className="w-full h-full object-cover transition-all duration-[1.5s] group-hover:scale-110 group-hover:rotate-1" 
                     alt={service.title} 
@@ -511,7 +511,7 @@ const App: React.FC = () => {
                 </div>
                 <div className={`p-10 text-${lang === 'ar' ? 'right' : 'left'}`}>
                   <div className={`w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-blue-600 group-hover:text-white group-hover:rotate-[360deg] transition-all duration-700`}>
-                    {i === 0 ? <Layers size={36} /> : i === 1 ? <Monitor size={36} /> : <Database size={36} />}
+                    {i === 0 ? <Settings size={36} /> : i === 1 ? <Cpu size={36} /> : <HardDrive size={36} />}
                   </div>
                   <h3 className="text-2xl font-black text-slate-900 mb-5">{service.title}</h3>
                   <p className="text-slate-500 font-bold text-sm leading-relaxed mb-10 opacity-80 group-hover:opacity-100 transition-opacity">{service.desc}</p>
@@ -528,7 +528,7 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* CTA Section - Outcome Focused */}
       <section id="contact" className="py-24 lg:py-48 bg-white overflow-hidden">
         <div className="container mx-auto px-6 lg:px-12">
           <motion.div 
@@ -575,7 +575,7 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* Footer */}
+      {/* Footer - Branding & Reliability */}
       <footer className={`footer-geometric py-24 relative overflow-hidden text-${lang === 'ar' ? 'right' : 'left'}`}>
         <div className="container mx-auto px-6 lg:px-12 relative z-10">
           <div className="grid lg:grid-cols-4 gap-20 mb-20">
@@ -587,7 +587,7 @@ const App: React.FC = () => {
                     {lang === 'ar' ? 'إنوفا تكنولوجي' : 'Innova Technology'}
                   </div>
                   <div className="text-[11px] font-black uppercase tracking-[0.5em] text-blue-400 mt-2">
-                    {lang === 'ar' ? 'تحفة رقمية' : 'Digital Masterpiece'}
+                    {lang === 'ar' ? 'نبتكر عالمك الرقمي' : 'Innovating Your Digital World'}
                   </div>
                 </div>
               </div>
@@ -628,7 +628,7 @@ const App: React.FC = () => {
           </div>
           
           <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className={`flex flex-col items-center md:items-${lang === 'ar' ? 'start' : 'start'} gap-2`}>
+            <div className={`flex flex-col items-center md:items-start gap-2`}>
               <div className="text-slate-500 font-bold text-[10px] uppercase tracking-[0.5em]">
                 &copy; {new Date().getFullYear()} Innova Technology. {t.footer.copyright}
               </div>
