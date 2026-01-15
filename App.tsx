@@ -226,7 +226,7 @@ const App: React.FC = () => {
             <div className="relative group">
               <div className="absolute -inset-4 bg-blue-600/5 rounded-[3rem] -rotate-2 group-hover:rotate-0 transition-transform duration-700"></div>
               <img 
-                src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=1000" 
+                src="https://i.pinimg.com/736x/33/75/17/3375170b6d543c2704a7f920766ac5c9.jpg" 
                 alt="Infrastructure" 
                 className="relative rounded-[3rem] shadow-2xl z-10 w-full object-cover aspect-[4/3]"
               />
