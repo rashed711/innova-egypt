@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { 
   ArrowLeft, ArrowRight, Layers, Phone, Mail, Monitor, 
@@ -8,7 +7,7 @@ import {
 import { motion, AnimatePresence, useScroll, useSpring, Variants } from 'framer-motion';
 
 const LOGO_URL = "https://a.top4top.io/p_36677u24m1.png";
-const WHATSAPP_LINK = "https://wa.me/201288333348";
+const WHATSAPP_LINK = "https://wa.me/201288333346";
 
 const translations = {
   en: {
@@ -35,6 +34,11 @@ const translations = {
         badge: 'Digital Transformation',
         title: 'Bespoke Software & Management Systems',
         sub: 'Custom-built web and mobile applications designed to enhance efficiency and drive scalable digital growth.'
+      },
+      {
+        badge: 'Future Tech',
+        title: 'Next-Gen Cybersecurity & Cloud',
+        sub: 'Protecting your digital assets with advanced security protocols and scalable cloud infrastructure designed for the future.'
       }
     ],
     heroButtons: {
@@ -114,6 +118,11 @@ const translations = {
         badge: 'التحول الرقمي',
         title: 'برمجيات مخصصة وأنظمة إدارية',
         sub: 'تطوير تطبيقات الويب والجوال المبتكرة المصممة لتعزيز الكفاءة ودفع عجلة النمو الرقمي.'
+      },
+      {
+        badge: 'تكنولوجيا المستقبل',
+        title: 'أمن سيبراني وسحابي متطور',
+        sub: 'حماية أصولك الرقمية بأحدث بروتوكولات الأمن والبنية التحتية السحابية القابلة للتوسع والمصممة للمستقبل.'
       }
     ],
     heroButtons: {
@@ -174,7 +183,8 @@ const translations = {
 const HERO_IMAGES = [
   "https://i.pinimg.com/736x/db/6c/2e/db6c2e6ece08917d6a1617d9f10c1594.jpg",
   "https://i.pinimg.com/1200x/af/d8/f3/afd8f33d32fc367949575dfccf2014c6.jpg",
-  "https://i.pinimg.com/736x/04/e4/41/04e4418b93f5abb7a3d843cb0fde3f7f.jpg"
+  "https://i.pinimg.com/736x/04/e4/41/04e4418b93f5abb7a3d843cb0fde3f7f.jpg",
+  "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200"
 ];
 
 const anim = {
@@ -249,10 +259,10 @@ const App: React.FC = () => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     
-    // Controlled timing for faster, more energetic feel (5.5 seconds per slide)
+    // Controlled timing: 5 seconds per slide for high impact
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % HERO_IMAGES.length);
-    }, 5500); 
+    }, 5000); 
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -336,37 +346,34 @@ const App: React.FC = () => {
         </div>
       </nav>
 
-      {/* Hero Section - Alternating Ken Burns Transitions */}
+      {/* Hero Section - Superior Alternating Ken Burns */}
       <section id="home" className="relative min-h-screen flex items-center bg-slate-950 overflow-hidden">
-        {/* Superior Cross-fade & Alternating Zoom System */}
+        {/* Advanced Cross-fade & Alternating Scale System */}
         <div className="absolute inset-0 z-0">
-          <AnimatePresence initial={false}>
+          <AnimatePresence>
             <motion.div 
               key={currentSlide}
-              // Even slides zoom in (1 -> 1.3), Odd slides zoom out (1.3 -> 1)
-              initial={{ opacity: 0, scale: currentSlide % 2 === 0 ? 1 : 1.3 }}
-              animate={{ opacity: 1, scale: currentSlide % 2 === 0 ? 1.3 : 1 }}
+              // STRICT ALTERNATION: 
+              // Slide 0: Zoom In (1 -> 1.25)
+              // Slide 1: Zoom Out (1.25 -> 1)
+              // Slide 2: Zoom In (1 -> 1.25)
+              // Slide 3: Zoom Out (1.25 -> 1)
+              initial={{ opacity: 0, scale: currentSlide % 2 === 0 ? 1 : 1.25 }}
+              animate={{ opacity: 1, scale: currentSlide % 2 === 0 ? 1.25 : 1 }}
               exit={{ opacity: 0, transition: { duration: 1.2 } }}
               transition={{ 
                 opacity: { duration: 1.5, ease: "easeInOut" },
-                scale: { duration: 5.5, ease: "linear" } // Fast continuous scale matching interval
+                scale: { duration: 5, ease: "linear" } 
               }}
               className="absolute inset-0 overflow-hidden"
             >
-              {/* Transient Glow Overlay */}
-              <motion.div 
-                className="absolute inset-0 z-[5] bg-blue-500/5"
-                initial={{ opacity: 1 }}
-                animate={{ opacity: 0 }}
-                transition={{ duration: 1.5 }}
-              />
               <img 
                 src={HERO_IMAGES[currentSlide]} 
                 className="w-full h-full object-cover" 
-                alt="Strategic Digital Growth" 
+                alt="Infrastructure & Tech" 
               />
               
-              {/* Cinematic Overlays */}
+              {/* Dynamic Overlays */}
               <div className="absolute inset-0 bg-slate-950/40 z-10" />
               <div className={`absolute inset-0 bg-gradient-to-${lang === 'ar' ? 'l' : 'r'} from-slate-950/95 via-slate-950/20 to-transparent z-10`} />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-90 z-10" />
@@ -440,7 +447,7 @@ const App: React.FC = () => {
           </div>
         </div>
 
-        {/* Dynamic Nav Elements */}
+        {/* Dynamic Navigation Progress */}
         <div className={`absolute bottom-12 ${lang === 'ar' ? 'right' : 'left'}-12 flex items-end gap-5 z-30`}>
           {HERO_IMAGES.map((_, i) => (
             <button 
@@ -449,7 +456,7 @@ const App: React.FC = () => {
               className="group relative h-24 w-1.5 overflow-hidden rounded-full bg-white/5 transition-all"
             >
               <motion.div 
-                className="absolute bottom-0 left-0 right-0 bg-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.7)]"
+                className="absolute bottom-0 left-0 right-0 bg-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.8)]"
                 initial={{ height: 0 }}
                 animate={{ height: currentSlide === i ? "100%" : "0%" }}
                 transition={{ duration: 0.8, ease: "circOut" }}
@@ -458,12 +465,12 @@ const App: React.FC = () => {
           ))}
           <div className={`m${lang === 'ar' ? 'r' : 'l'}-4 flex flex-col items-center gap-4`}>
              <motion.div 
-              animate={{ height: [0, 48, 0], opacity: [0.1, 0.4, 0.1] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-              className="w-px bg-blue-400"
+              animate={{ height: [0, 52, 0], opacity: [0.1, 0.5, 0.1] }}
+              transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
+              className="w-px bg-blue-500"
              />
-             <div className="text-white/20 font-black text-[8px] vertical-text tracking-[0.6em] uppercase">
-                Digital Velocity
+             <div className="text-white/20 font-black text-[8px] vertical-text tracking-[0.7em] uppercase">
+                Digital Flow
              </div>
           </div>
         </div>
@@ -601,7 +608,7 @@ const App: React.FC = () => {
                   {t.cta.button}
                   <ExternalLink size={20} />
                 </Button>
-                <div className="flex items-center gap-6 group cursor-pointer" onClick={() => window.location.href='tel:01288333348'}>
+                <div className="flex items-center gap-6 group cursor-pointer" onClick={() => window.location.href='tel:01288333346'}>
                   <motion.div 
                     animate={{ scale: [1, 1.1, 1] }}
                     transition={{ duration: 2, repeat: Infinity }}
@@ -611,7 +618,7 @@ const App: React.FC = () => {
                   </motion.div>
                   <div className={`text-${lang === 'ar' ? 'right' : 'left'}`}>
                     <div className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-200 opacity-60">{t.cta.phoneLabel}</div>
-                    <div className="text-2xl font-black text-white tracking-widest" dir="ltr">01288333348</div>
+                    <div className="text-2xl font-black text-white tracking-widest" dir="ltr">01288333346</div>
                   </div>
                 </div>
               </div>
